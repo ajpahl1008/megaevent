@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import com.pahlsoft.ws.megaevent.exceptions.InvalidEventException;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -150,8 +151,11 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 		return items;
 	}
 		
-	public int addEvent(Event event) {
+	public int addEvent(Event event) throws InvalidEventException {
 		daoLog.debug("Adding Event Entitled: " + event.getTitle());
+        if (event.getTitle().isEmpty() || event.getDescription().isEmpty() || event.getEventStatus() == null  ) {
+            throw new InvalidEventException("Incomplete Event Data");
+        }
 		String event_sql = "INSERT INTO megaevent.events VALUES (default,?,?,?)";
 		return getJdbcTemplate().update(event_sql,new Object[] { event.getTitle(),
 																 event.getDescription(),
