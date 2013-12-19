@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import com.pahlsoft.ws.megaevent.exceptions.InvalidEventException;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -105,6 +104,29 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 		return (Person)getJdbcTemplate().queryForObject(sql, new Object[] { personId}, new PersonMapper());
 
 	}
+	
+	public List<Person> getPersons() {
+		daoLog.debug("Querying for Persons for All persons");
+		String sql = "select * from megaevent.megaevent_persons_j01";
+		List<Person> persons = new ArrayList<Person>();
+
+		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
+		for (Map<?, ?> row : rows) {
+			Person person = new Person();
+			person.setId((Integer)row.get("personID"));
+			person.setFirstName((String) row.get("first_name"));
+			person.setLastName((String)row.get("last_name"));
+			person.setLogin((String)row.get("login"));
+			person.setRole(Role.fromValue((String)row.get("role")));
+			person.setWorkPhone((String)row.get("work_phone"));
+			person.setCellPhone((String)row.get("cell_phone"));
+			person.setPager((String)row.get("pager"));
+			persons.add(person);
+		}
+
+		return persons;
+		
+	}
 
 	public List<Person> getPersons(int eventId) {
 		daoLog.debug("Querying for Persons for Event ID: " + eventId);
@@ -151,11 +173,8 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 		return items;
 	}
 		
-	public int addEvent(Event event) throws InvalidEventException {
+	public int addEvent(Event event) {
 		daoLog.debug("Adding Event Entitled: " + event.getTitle());
-        if (event.getTitle().isEmpty() || event.getDescription().isEmpty() || event.getEventStatus() == null  ) {
-            throw new InvalidEventException("Incomplete Event Data");
-        }
 		String event_sql = "INSERT INTO megaevent.events VALUES (default,?,?,?)";
 		return getJdbcTemplate().update(event_sql,new Object[] { event.getTitle(),
 																 event.getDescription(),

@@ -9,10 +9,6 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 
-import com.pahlsoft.ws.megaevent.exceptions.InvalidEventException;
-import com.pahlsoft.ws.megaevent.exceptions.InvalidPersonException;
-import com.pahlsoft.ws.megaevent.exceptions.InvalidTargetedItemException;
-import com.pahlsoft.ws.megaevent.exceptions.InvalidTaskException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,100 +38,106 @@ public class MegaEventServicesEndpoint extends SpringBeanAutowiringSupport {
 	
 	@WebMethod
 	public int addTask(@WebParam(name="taskInfo", targetNamespace="http://megaevent.ws.pahlsoft.com") Task taskInfo, 
-					   @WebParam(name="eventId", targetNamespace="http://megaevent.ws.pahlsoft.com") int eventId) throws InvalidTaskException {
-		serviceEndpointLogger.debug("addTask");
+					   @WebParam(name="eventId", targetNamespace="http://megaevent.ws.pahlsoft.com") int eventId) throws Exception {
+		serviceEndpointLogger.info("Me: addTask");
 		return megaEventDao.addTask(taskInfo, eventId);
 	}
 	
 	@WebMethod
-	public int addEvent(@WebParam(name="eventInfo", targetNamespace="http://megaevent.ws.pahlsoft.com") Event eventInfo) throws InvalidEventException {
-		serviceEndpointLogger.debug("Me: addEvent");
+	public int addEvent(@WebParam(name="eventInfo", targetNamespace="http://megaevent.ws.pahlsoft.com") Event eventInfo) throws Exception {
+		serviceEndpointLogger.info("Me: addEvent");
 		return megaEventDao.addEvent(eventInfo);
 	}
 	
 	@WebMethod
-	public int addPerson(@WebParam(name="personInfo", targetNamespace="http://megaevent.ws.pahlsoft.com") Person personInfo) throws InvalidPersonException {
-		serviceEndpointLogger.debug("Me: addPerson");
+	public int addPerson(@WebParam(name="personInfo", targetNamespace="http://megaevent.ws.pahlsoft.com") Person personInfo) throws Exception {
+		serviceEndpointLogger.info("Me: addPerson");
 		return megaEventDao.addPerson(personInfo);
 	}
 	
 	@WebMethod
-	public int addTargetedItem(@WebParam(name="targetedItemInfo", targetNamespace="http://megaevent.ws.pahlsoft.com") TargetedItem itemInfo) throws InvalidTargetedItemException {
-		serviceEndpointLogger.debug("Me: addTargetedItem");
+	public int addTargetedItem(@WebParam(name="targetedItemInfo", targetNamespace="http://megaevent.ws.pahlsoft.com") TargetedItem itemInfo) throws Exception {
+		serviceEndpointLogger.info("Me: addTargetedItem");
 		return megaEventDao.addTargetedItem(itemInfo);
 	}
 	
 	@WebMethod
-	public int updateEvent(@WebParam(name="eventInfo", targetNamespace="http://megaevent.ws.pahlsoft.com") Event eventInfo) throws InvalidEventException {
-		serviceEndpointLogger.debug("Me: updateEvent");
+	public int updateEvent(@WebParam(name="eventInfo", targetNamespace="http://megaevent.ws.pahlsoft.com") Event eventInfo) throws Exception {
+		serviceEndpointLogger.info("Me: updateEvent");
 		return megaEventDao.updateEvent(eventInfo);
 	}
 
 	@WebMethod
-	public int updateTask(@WebParam(name="taskInfo", targetNamespace="http://megaevent.ws.pahlsoft.com") Task taskInfo) throws InvalidTaskException {
-		serviceEndpointLogger.debug("Me: updateTask");
+	public int updateTask(@WebParam(name="taskInfo", targetNamespace="http://megaevent.ws.pahlsoft.com") Task taskInfo) throws Exception {
+		serviceEndpointLogger.info("Me: updateTask");
 		return megaEventDao.updateTask(taskInfo);
 	}
 	
 	
 	@WebMethod
-	public int updatePerson(@WebParam(name="personInfo", targetNamespace="http://megaevent.ws.pahlsoft.com") Person personInfo) throws InvalidPersonException {
-		serviceEndpointLogger.debug("Me: updatePerson");
+	public int updatePerson(@WebParam(name="personInfo", targetNamespace="http://megaevent.ws.pahlsoft.com") Person personInfo) throws Exception {
+		serviceEndpointLogger.info("Me: updatePerson");
 		return megaEventDao.updatePerson(personInfo);
 	}
 	
 	@WebMethod
-	public int updateTargetedItem(@WebParam(name="targetedItemInfo", targetNamespace="http://megaevent.ws.pahlsoft.com") TargetedItem targetedItemInfo) throws InvalidTargetedItemException {
-		serviceEndpointLogger.debug("Me: updateTargetedItem");
+	public int updateTargetedItem(@WebParam(name="targetedItemInfo", targetNamespace="http://megaevent.ws.pahlsoft.com") TargetedItem targetedItemInfo) throws Exception {
+		serviceEndpointLogger.info("Me: updateTargetedItem");
 		return megaEventDao.updateTargetedItem(targetedItemInfo);
 	}
 	
 	@WebMethod
-	public Task getTask(@WebParam(name="taskId", targetNamespace="http://megaevent.ws.pahlsoft.com") int taskId  ) throws InvalidTaskException {
-		serviceEndpointLogger.debug("Me: getTask");
+	public Task getTask(@WebParam(name="taskId", targetNamespace="http://megaevent.ws.pahlsoft.com") int taskId  ) throws Exception {
+		serviceEndpointLogger.info("Me: getTask");
 		return megaEventDao.getTask(taskId);
 	}
 	
 	@WebMethod
-	public List<Task> getTasks(@WebParam(name="eventId", targetNamespace="http://megaevent.ws.pahlsoft.com") int eventId) throws InvalidTaskException {
-		serviceEndpointLogger.debug("Me: getTask");
+	public List<Task> getTasks(@WebParam(name="eventId", targetNamespace="http://megaevent.ws.pahlsoft.com") int eventId) throws Exception {
+		serviceEndpointLogger.info("Me: getTask");
 		return megaEventDao.getTasks(eventId);
 		
 	}
 	
 	@WebMethod
-	public Event getEvent(@WebParam(name="eventId", targetNamespace="http://megaevent.ws.pahlsoft.com") int eventId) throws InvalidEventException {
-		serviceEndpointLogger.debug("Me: getEvent");
+	public Event getEvent(@WebParam(name="eventId", targetNamespace="http://megaevent.ws.pahlsoft.com") int eventId) throws Exception {
+		serviceEndpointLogger.info("Me: getEvent");
 		return megaEventDao.getEvent(eventId); 
 	}
 	
 	@WebMethod
 	public List<Event> getEvents() throws Exception {
-		serviceEndpointLogger.debug("Me: getEvent");
+		serviceEndpointLogger.info("Me: getEvent");
 		return megaEventDao.getEvents(); 
 	}
 	
 	@WebMethod
-	public Person getPerson(@WebParam(name="personId", targetNamespace="http://megaevent.ws.pahlsoft.com") int personId) throws InvalidPersonException {
-		serviceEndpointLogger.debug("Me: getPerson");
+	public Person getPerson(@WebParam(name="personId", targetNamespace="http://megaevent.ws.pahlsoft.com") int personId) throws Exception {
+		serviceEndpointLogger.info("Me: getPerson");
 		return megaEventDao.getPerson(personId);
 	}
 	
 	@WebMethod
-	public List<Person> getPersons(@WebParam(name="eventId", targetNamespace="http://megaevent.ws.pahlsoft.com") int eventId) throws InvalidPersonException {
-		serviceEndpointLogger.debug("Me: getPersons");
+	public List<Person> getInvolvedPersons(@WebParam(name="eventId", targetNamespace="http://megaevent.ws.pahlsoft.com") int eventId) throws Exception {
+		serviceEndpointLogger.info("Me: getPersons");
 		return megaEventDao.getPersons(eventId);
 	}
 	
 	@WebMethod
-	public TargetedItem getTargetedItem(@WebParam(name="taskId", targetNamespace="http://megaevent.ws.pahlsoft.com") int taskId) throws InvalidTargetedItemException {
-		serviceEndpointLogger.debug("Me: getTargetedItem");
+	public List<Person> getAllPersons() throws Exception {
+		serviceEndpointLogger.info("Me: getAllPersons");
+		return megaEventDao.getPersons();
+	}
+	
+	@WebMethod
+	public TargetedItem getTargetedItem(@WebParam(name="taskId", targetNamespace="http://megaevent.ws.pahlsoft.com") int taskId) throws Exception {
+		serviceEndpointLogger.info("Me: getTargetedItem");
 		return megaEventDao.getTargetedItem(taskId);
 	}
 
 	@WebMethod
-	public List<TargetedItem> getTargetedItems(@WebParam(name="eventId", targetNamespace="http://megaevent.ws.pahlsoft.com") int eventId) throws InvalidTargetedItemException {
-		serviceEndpointLogger.debug("Me: getTargetedItems");
+	public List<TargetedItem> getTargetedItems(@WebParam(name="eventId", targetNamespace="http://megaevent.ws.pahlsoft.com") int eventId) throws Exception {
+		serviceEndpointLogger.info("Me: getTargetedItems");
 		return megaEventDao.getTargetedItems(eventId);
 	}
 	
