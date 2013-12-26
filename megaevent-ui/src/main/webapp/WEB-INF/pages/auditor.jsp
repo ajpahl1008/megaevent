@@ -9,9 +9,9 @@
 
 <title>MegaEvent - Auditor</title>
 <meta name="viewport" content="width=device-width">
-<link rel="stylesheet"	href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-<script type="text/javascript"	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script type="text/javascript"	src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
+<script src="<c:url value="/resources/js/jquery-1.10.2.min.js" />"></script>
+<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 <style type="text/css">
 body {
 	padding-top: 20px;
@@ -134,6 +134,7 @@ body {
 			<ul class="nav nav-justified">
 				<li><a href="home">Home</a></li>
 				<li><a>Events</a></li>
+				<li><a>Tasks</a></li>
 				<li><a>Change Controls</a></li>
 			</ul>
 		</div>
