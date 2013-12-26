@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="roleMapBean" class="com.pahlsoft.ws.megaevent.beans.RoleMapBean" init-method="load"/>
+	<bean id="eventStatusTypeMapBean" class="com.pahlsoft.ws.megaevent.beans.EventStatusMapBean" init-method="load"/>
+	<bean id="changeStatusTypeMapBean" class="com.pahlsoft.ws.megaevent.beans.ChangeStatusMapBean" init-method="load"/>
+	<bean id="taskStatusTypeMapBean" class="com.pahlsoft.ws.megaevent.beans.TaskStatusMapBean" init-method="load"/>
+	<bean id="taskResultTypeMapBean" class="com.pahlsoft.ws.megaevent.beans.TaskResultMapBean" init-method="load"/>
+	<bean id="assetTypeMapBean" class="com.pahlsoft.ws.megaevent.beans.AssetMapBean" init-method="load"/>
+			
+</beans>

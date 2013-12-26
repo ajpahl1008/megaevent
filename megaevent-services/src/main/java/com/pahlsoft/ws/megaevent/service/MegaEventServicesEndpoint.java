@@ -1,6 +1,5 @@
 package com.pahlsoft.ws.megaevent.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -37,10 +36,9 @@ public class MegaEventServicesEndpoint extends SpringBeanAutowiringSupport {
 	public Logger serviceEndpointLogger = Logger.getLogger(MegaEventServicesEndpoint.class);
 	
 	@WebMethod
-	public int addTask(@WebParam(name="taskInfo", targetNamespace="http://ws.megaevent.pahlsoft.com") Task taskInfo, 
-					   @WebParam(name="eventId", targetNamespace="http://ws.megaevent.pahlsoft.com") int eventId) throws Exception {
+	public int addTask(@WebParam(name="taskInfo", targetNamespace="http://ws.megaevent.pahlsoft.com") Task taskInfo) throws Exception {
 		serviceEndpointLogger.info("Me: addTask");
-		return megaEventDao.addTask(taskInfo, eventId);
+		return megaEventDao.addTask(taskInfo);
 	}
 	
 	@WebMethod

@@ -3,23 +3,29 @@ package com.pahlsoft.ws.megaevent.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.pahlsoft.ws.megaevent.beans.AssetMapBean;
+import com.pahlsoft.ws.megaevent.beans.ChangeStatusMapBean;
+import com.pahlsoft.ws.megaevent.beans.EventStatusMapBean;
+import com.pahlsoft.ws.megaevent.beans.RoleMapBean;
+import com.pahlsoft.ws.megaevent.beans.TaskResultMapBean;
+import com.pahlsoft.ws.megaevent.beans.TaskStatusMapBean;
 import com.pahlsoft.ws.megaevent.dao.MegaEventDAO;
-import com.pahlsoft.ws.megaevent.generated.AssetType;
-import com.pahlsoft.ws.megaevent.generated.ChangeStatus;
+import com.pahlsoft.ws.megaevent.exceptions.InvalidAssetTypeException;
+import com.pahlsoft.ws.megaevent.exceptions.InvalidChangeStatusException;
+import com.pahlsoft.ws.megaevent.exceptions.InvalidRoleException;
+import com.pahlsoft.ws.megaevent.exceptions.InvalidTaskException;
 import com.pahlsoft.ws.megaevent.generated.Event;
-import com.pahlsoft.ws.megaevent.generated.EventStatus;
 import com.pahlsoft.ws.megaevent.generated.Person;
-import com.pahlsoft.ws.megaevent.generated.Role;
 import com.pahlsoft.ws.megaevent.generated.TargetedItem;
 import com.pahlsoft.ws.megaevent.generated.Task;
-import com.pahlsoft.ws.megaevent.generated.TaskResult;
-import com.pahlsoft.ws.megaevent.generated.TaskStatus;
 import com.pahlsoft.ws.megaevent.mappers.PersonMapper;
 import com.pahlsoft.ws.megaevent.mappers.TargetedItemMapper;
 import com.pahlsoft.ws.megaevent.mappers.TaskRowMapper;
@@ -29,7 +35,20 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 	private JdbcTemplate jdbcTemplate;
 
 	public Logger daoLog = Logger.getLogger(MegaEventDAOImpl.class);
-
+	
+	@Autowired
+	AssetMapBean assetMapBean;
+	@Autowired
+	ChangeStatusMapBean changeStatusMapBean;
+	@Autowired
+	EventStatusMapBean eventStatusMapBean;
+	@Autowired
+	RoleMapBean roleMapBean;
+	@Autowired
+	TaskResultMapBean taskResultMapBean;
+	@Autowired
+	TaskStatusMapBean taskStatusMapBean;
+		
 	public Event getEvent(int eventId) {
 
 		daoLog.debug("Querying for Event: " + eventId);
@@ -39,14 +58,13 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 		event.setId(eventId);
 		event.setTitle((String)attributes.get("title"));
 		event.setDescription((String)attributes.get("description"));
-		event.setEventStatus(EventStatus.fromValue((String)attributes.get("status")));
-
+		event.setEventStatus((String)attributes.get("status"));
 		return event;
 	}
 
 	public List<Event> getEvents() {
 		daoLog.debug("Querying for all Events");
-		String sql = "select * from megaevent.megaevent_events_j01";
+		String sql = "select * from megaevent.megaevent_events_j01 order by eventID";
 		List<Event> events = new ArrayList<Event>();
 		
 		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
@@ -55,7 +73,7 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 			event.setId((Integer)row.get("eventID"));
 			event.setTitle((String)row.get("title"));
 			event.setDescription((String)row.get("description"));
-			event.setEventStatus(EventStatus.valueOf(((String)row.get("status"))));
+			event.setEventStatus((String)row.get("status"));
 			
 			events.add(event);
 		}		
@@ -72,17 +90,17 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 			Task task = new Task();
 			task.setId((Integer)row.get("taskID"));
 			task.setName((String)row.get("task_name"));
-			task.setTaskStatus(TaskStatus.fromValue(((String)row.get("task_status"))));
-			task.setTaskResult(TaskResult.fromValue(((String)row.get("task_result"))));
+			task.setTaskStatus((String)row.get("task_status"));
+			task.setTaskResult((String)row.get("task_result"));
 			task.setDependencyId((Integer)row.get("dependency_taskID"));
 			task.setEventId((Integer)row.get("eventID"));
 			task.setOwnerId((Integer)row.get("ownerID"));
 			task.setActivatorId((Integer)row.get("activatorID"));
 			task.setValidatorId((Integer)row.get("validatorID"));
-			task.setRole(Role.valueOf((String)row.get("role")));
+			task.setRole((String)row.get("role"));
 			task.setDescription(((String)row.get("description")));
 			task.setChangeControlNumber((((String)row.get("change_control"))));
-			task.setChangeControlStatus(ChangeStatus.valueOf((String)row.get("change_status")));
+			task.setChangeControlStatus((String)row.get("change_status"));
 			task.setAssetName((String)row.get("asset_name"));
 			tasks.add(task);
 		}
@@ -117,7 +135,7 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 			person.setFirstName((String) row.get("first_name"));
 			person.setLastName((String)row.get("last_name"));
 			person.setLogin((String)row.get("login"));
-			person.setRole(Role.fromValue((String)row.get("role")));
+			person.setRole((String)row.get("role"));
 			person.setWorkPhone((String)row.get("work_phone"));
 			person.setCellPhone((String)row.get("cell_phone"));
 			person.setPager((String)row.get("pager"));
@@ -140,7 +158,7 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 			person.setFirstName((String) row.get("first_name"));
 			person.setLastName((String)row.get("last_name"));
 			person.setLogin((String)row.get("login"));
-			person.setRole(Role.fromValue((String)row.get("role")));
+			person.setRole((String)row.get("role"));
 			person.setWorkPhone((String)row.get("work_phone"));
 			person.setCellPhone((String)row.get("cell_phone"));
 			person.setPager((String)row.get("pager"));
@@ -167,7 +185,7 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 			TargetedItem item = new TargetedItem();
 			item.setId((Integer)row.get("taskID"));
 			item.setAssetName((String)row.get("asset_name"));
-			item.setAssetType(AssetType.valueOf((String)row.get("asset_type")));
+			item.setAssetType((String)row.get("asset_type"));
 			items.add(item);
 		}
 		return items;
@@ -178,16 +196,16 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 		String event_sql = "INSERT INTO megaevent.events VALUES (default,?,?,?)";
 		return getJdbcTemplate().update(event_sql,new Object[] { event.getTitle(),
 																 event.getDescription(),
-																 getStatusId(event.getEventStatus())});
+																 getEventStatusId(event.getEventStatus())});
 	}
 
-	public int addTask(Task taskInfo, int eventId) {
-		daoLog.debug("Adding Task to Event ID: " + eventId);
+	public int addTask(Task taskInfo) throws Exception {
+		daoLog.debug("Adding Task to Event ID: " + taskInfo.getEventId());
 		String event_sql = "INSERT INTO megaevent.tasks VALUES (default,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		return getJdbcTemplate().update(event_sql,new Object[] { 
 																 taskInfo.getName(),
-																 getStatusId(taskInfo.getTaskStatus()),
-																 getResultId(taskInfo.getTaskResult()),
+																 getTaskStatusId(taskInfo.getTaskStatus()),
+																 getTaskResultId(taskInfo.getTaskResult()),
 																 taskInfo.getDependencyId(),
 																 taskInfo.getEventId(),
 																 taskInfo.getOwnerId(),
@@ -196,15 +214,12 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 																 getRoleId(taskInfo.getRole()),
 																 taskInfo.getDescription(),
 																 taskInfo.getChangeControlNumber(),
-																 getStatusId(taskInfo.getChangeControlStatus()),
+																 getChangeStatusId(taskInfo.getChangeControlStatus()),
 																 getTargetedItemId(taskInfo.getAssetName())
-																 
-																 
-																 
 		});
 	}
 
-	public int addPerson(Person person) {
+	public int addPerson(Person person) throws Exception {
 		daoLog.debug("Adding Person : " + person.getFirstName() + " " + person.getLastName());
 		String person_sql = "INSERT INTO megaevent.persons VALUES (default,?,?,?,?,?,?,?)";
 		return getJdbcTemplate().update(person_sql,new Object[] {
@@ -219,7 +234,7 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 		
 	}
 
-	public int addTargetedItem(TargetedItem targetedItem) {
+	public int addTargetedItem(TargetedItem targetedItem) throws Exception {
 
 		daoLog.debug("Adding Targeted Item: " + targetedItem.getAssetName());
 		String targeted_item_sql = "INSERT INTO megaevent.targeted_items VALUES (default,?,?)";
@@ -235,7 +250,7 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 		String event_sql = "UPDATE megaevent.events set title=?, description=?,status=? where eventID =?";
 		return getJdbcTemplate().update(event_sql,new Object[] {event.getTitle(),
 																	  event.getDescription(),
-																	  getStatusId(event.getEventStatus()),
+																	  event.getEventStatus(),
 																	  event.getId()
 		});
 	}
@@ -244,23 +259,23 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 		daoLog.debug("Updating Task : " + taskInfo.getId());
 		String task_sql = "UPDATE megaevent.tasks set name=?,task_status=?,task_result=?,dependency_taskID=?,eventID=?,ownerID=?,activatorID=?,validatorID=?,role=?,description=?,change_control=?,change_status=?,targeted_itemID=? where taskID=?";
 		return getJdbcTemplate().update(task_sql,new Object[] {taskInfo.getName(),
-																 getStatusId(taskInfo.getTaskStatus()),
-																 getResultId(taskInfo.getTaskResult()),
+																 taskInfo.getTaskStatus(),
+																 taskInfo.getTaskResult(),
 																 taskInfo.getDependencyId(),
 																 taskInfo.getEventId(),
 																 taskInfo.getOwnerId(),
 																 taskInfo.getActivatorId(),
 																 taskInfo.getValidatorId(),
-																 getRoleId(taskInfo.getRole()),
+																 taskInfo.getRole(),
 																 taskInfo.getDescription(),
 																 taskInfo.getChangeControlNumber(),
-																 getStatusId(taskInfo.getChangeControlStatus()),
+																 taskInfo.getChangeControlStatus(),
 																 getTargetedItemId(taskInfo.getAssetName()),
 																 taskInfo.getId()
 		});
 	}
 
-	public int updatePerson(Person person) {
+	public int updatePerson(Person person) throws Exception {
 		daoLog.debug("Updating Person: " + person.getFirstName() + " " + person.getLastName());
 		String task_sql = "UPDATE megaevent.persons set first_name=?,last_name=?,login=?,roleID=?,work_phone=?,cell_phone=?,pager=? where personID=?";
 		return getJdbcTemplate().update(task_sql,new Object[] {	person.getFirstName(),
@@ -279,47 +294,84 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 		daoLog.debug("Updating Targeted Item: " + targetedItem.getAssetName());
 		String task_sql = "UPDATE megaevent.targeted_items set asset_name=?,asset_typeID=? where targeted_itemsID=?";
 		return getJdbcTemplate().update(task_sql,new Object[] {	targetedItem.getAssetName(),
-																getAssetTypeId(targetedItem.getAssetType()),
+																targetedItem.getAssetType(),
 																targetedItem.getId()
-																
 		});
 	}
 	
-	private int getStatusId(EventStatus status) {
-		String status_sql = "select event_statusID from megaevent.event_status where event_status=?";
-		return getJdbcTemplate().queryForInt(status_sql,new Object[] {status.value()} );
+	private int getEventStatusId(String statusName) {
+		Integer key=null;
+		for (Entry<Integer,String> entry : eventStatusMapBean.getEventStatusTypes().entrySet() ) {
+			if (statusName.equalsIgnoreCase(entry.getValue())){
+				key=entry.getKey();
+			}
+		}
+		return key;
 	}
 	
-	private int getStatusId(TaskStatus status) {
-		String status_sql = "select task_statusID from megaevent.task_status where task_status =?";
-		return getJdbcTemplate().queryForInt(status_sql,new Object[] {status.value()} );
+	private int getTaskStatusId(String taskStatusName) throws InvalidTaskException {
+		Integer key = null;
+		for (Entry<Integer,String> entry : taskStatusMapBean.getTaskStatusTypes().entrySet() ) {
+			if (taskStatusName.equalsIgnoreCase(entry.getValue())){
+				key=entry.getKey();
+			}
+		}
+		if (key==null) throw new InvalidTaskException("Not a valid Task Status");
+		return key;
+
 	}
 	
-	private int getStatusId(ChangeStatus status) {
-		String status_sql = "select change_statusID from megaevent.change_status where change_status =?";
-		return getJdbcTemplate().queryForInt(status_sql,new Object[] {status.value()} );
+	private int getChangeStatusId(String changeStatusName) throws InvalidChangeStatusException {
+		Integer key= null;
+		for (Entry<Integer,String> entry : changeStatusMapBean.getChangeStatusTypes().entrySet() ) {
+			if (changeStatusName.equalsIgnoreCase(entry.getValue())){
+				key=entry.getKey();
+			}
+		}
+		if (key==null) throw new InvalidChangeStatusException("Not a valid Change Status");
+		return key;
 	}
 
-	private int getResultId(TaskResult result) {
-		String result_sql = "select task_resultID from megaevent.task_result where task_result=?";
-		return getJdbcTemplate().queryForInt(result_sql,new Object[] {result.value()} );
+	private int getTaskResultId(String taskResultName) throws InvalidTaskException {
+		Integer key= null;
+		for (Entry<Integer,String> entry : taskResultMapBean.getTaskResultTypes().entrySet() ) {
+			if (taskResultName.equalsIgnoreCase(entry.getValue())){
+				key=entry.getKey();
+			}
+		}
+		if (key==null) throw new InvalidTaskException("Not a valid Task Result");
+		return key;
 	}
 	
-	private int getRoleId(Role role) {
-		String role_sql = "select roleID from megaevent.roles where role=?";
-		return getJdbcTemplate().queryForInt(role_sql,new Object[] {role.value()});	
+	private int getRoleId(String roleName) throws InvalidRoleException {
+		Integer key=null;
+		
+		for (Entry<Integer,String> entry : roleMapBean.getRoleTypes().entrySet() ) {
+			if (roleName.equalsIgnoreCase(entry.getValue())){
+				key=entry.getKey();
+			}
+		}
+		if (key==null) throw new InvalidRoleException("Not a valid role");
+		
+		return key;
 	}
 
+	private int getAssetTypeId(String assetTypeName) throws InvalidAssetTypeException {
+		Integer key=null;
+		for (Entry<Integer,String> entry : assetMapBean.getAssetTypes().entrySet() ) {
+			if (assetTypeName.equalsIgnoreCase(entry.getValue())){
+				key=entry.getKey();
+			}
+		}
+		if (key==null) throw new InvalidAssetTypeException("Not a valid Asset Type");
+		return key;
+	}
+	
 	private int getTargetedItemId(String assetName) {
-		String role_sql = "select targeted_itemsID from megaevent.targeted_items where asset_name=?";
-		return getJdbcTemplate().queryForInt(role_sql,new Object[] {assetName});	
+		String target_sql = "select targeted_itemsID from megaevent.targeted_items where asset_name=? limit 1";
+		return getJdbcTemplate().queryForInt(target_sql,new Object[] {assetName});	
 	}
-	
-	private int getAssetTypeId(AssetType assetType) {
-		String role_sql = "select asset_typeID from megaevent.asset_types where asset_type=?";
-		return getJdbcTemplate().queryForInt(role_sql,new Object[] {assetType.value()});	
-	}
-
+			
 	public JdbcTemplate getJdbcTemplate() {
 		return jdbcTemplate;
 	}
@@ -335,6 +387,4 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 	public void setDataSource(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
-
-
 }

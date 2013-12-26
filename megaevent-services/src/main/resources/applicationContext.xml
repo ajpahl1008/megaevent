@@ -9,5 +9,6 @@
     <context:annotation-config />
 	<import resource="MegaEvent-DataSource.xml" />
 	<import resource="MegaEvent-EventDAO.xml" />
+	<import resource="MegaEvent-PropertyBeans.xml" />
 
 </beans>

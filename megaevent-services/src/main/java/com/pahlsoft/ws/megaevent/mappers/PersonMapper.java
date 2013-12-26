@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.pahlsoft.ws.megaevent.generated.Person;
-import com.pahlsoft.ws.megaevent.generated.Role;
 
 public class PersonMapper implements RowMapper<Person> {
 
@@ -17,7 +16,7 @@ public class PersonMapper implements RowMapper<Person> {
 		person.setFirstName(rs.getString("first_name"));
 		person.setLastName(rs.getString("last_name"));
 		person.setLogin(rs.getString("login"));
-		person.setRole(Role.fromValue(rs.getString("role")));
+		person.setRole(rs.getString("role"));
 		person.setWorkPhone(rs.getString("work_phone"));
 		person.setCellPhone(rs.getString("cell_phone"));
 		person.setPager(rs.getString("pager"));

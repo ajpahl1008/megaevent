@@ -6,5 +6,10 @@
 	<bean id="eventDao" class="com.pahlsoft.ws.megaevent.dao.impl.MegaEventDAOImpl">
 			<property name="dataSource" ref="dataSource"/>
 	</bean>
+		
+	<bean id="propertyDao" class="com.pahlsoft.ws.megaevent.dao.impl.PropertyDAOImpl">
+			<property name="dataSource" ref="dataSource"/>
+	</bean>
 
+	
 </beans>

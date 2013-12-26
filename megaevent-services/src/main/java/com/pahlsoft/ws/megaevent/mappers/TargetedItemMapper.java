@@ -5,7 +5,6 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.pahlsoft.ws.megaevent.generated.AssetType;
 import com.pahlsoft.ws.megaevent.generated.TargetedItem;
 
 public class TargetedItemMapper implements RowMapper<TargetedItem> {
@@ -15,7 +14,7 @@ public class TargetedItemMapper implements RowMapper<TargetedItem> {
 		
 		targetedItem.setId(rs.getInt("taskID"));
 		targetedItem.setAssetName(rs.getString("asset_name"));
-		targetedItem.setAssetType(AssetType.valueOf(rs.getString("asset_type")));
+		targetedItem.setAssetType(rs.getString("asset_type"));
 		
 		return targetedItem;
 	}
