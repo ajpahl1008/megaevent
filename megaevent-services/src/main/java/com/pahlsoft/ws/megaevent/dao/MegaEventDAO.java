@@ -11,10 +11,20 @@ import com.pahlsoft.ws.megaevent.generated.Task;
 public interface MegaEventDAO {
 	// The Getters
 	public Event getEvent(int eventId);
-	public List<Event> getEvents();
+	public List<Event> getAllEvents();
+	public List<Event> getClosedEvents();
+	public List<Event> getCanceledEvents();
+	public List<Event> getInactiveEvents();
+	public List<Event> getMyAssignedEvents(int personId);
+	
 	
 	public Task getTask(int taskId);  
 	public List<Task> getTasks(int eventId);
+	public List<Task> getMyAssignedTasks(int personId);
+	public List<Task> getMyCompletedTasksForEvent(int personId, int eventId);
+	public List<Task> getMyAssignedTasksForEvent(int personId, int eventId);
+	public List<Task> getMyTaskHistory(int personId);
+	
 	
 	public Person getPerson(int personId);
 	public List<Person> getPersons(int eventId);

@@ -98,15 +98,69 @@ public class MegaEventServicesEndpoint extends SpringBeanAutowiringSupport {
 	}
 	
 	@WebMethod
+	public List<Task> getMyAssignedTasks(@WebParam(name="personId", targetNamespace="http://ws.megaevent.pahlsoft.com") int personId) throws Exception {
+		serviceEndpointLogger.info("Me: getMyAssignedTasks");
+		return megaEventDao.getMyAssignedTasks(personId);
+		
+	}
+	
+	@WebMethod
+	public List<Task> getMyAssignedTasksForEvent(@WebParam(name="personId", targetNamespace="http://ws.megaevent.pahlsoft.com") int personId, 
+			                                     @WebParam(name="eventId", targetNamespace="http://ws.megaevent.pahlsoft.com") int eventId) throws Exception {
+		serviceEndpointLogger.info("Me: getMyAssignedTasksForEvent");
+		return megaEventDao.getMyAssignedTasksForEvent(personId,eventId);
+		
+	}
+	
+	@WebMethod
+	public List<Task> getMyCompletedTasksForEvent(@WebParam(name="personId", targetNamespace="http://ws.megaevent.pahlsoft.com") int personId, 
+			                                     @WebParam(name="eventId", targetNamespace="http://ws.megaevent.pahlsoft.com") int eventId) throws Exception {
+		serviceEndpointLogger.info("Me: getMyClosedTasksForEvent");
+		return megaEventDao.getMyCompletedTasksForEvent(personId,eventId);
+		
+	}
+	
+	@WebMethod
+	public List<Task> getMyTaskHistory(@WebParam(name="personId", targetNamespace="http://ws.megaevent.pahlsoft.com") int personId) throws Exception {
+		serviceEndpointLogger.info("Me: getMyTaskHistory");
+		return megaEventDao.getMyTaskHistory(personId);
+		
+	}
+		
+	@WebMethod
 	public Event getEvent(@WebParam(name="eventId", targetNamespace="http://ws.megaevent.pahlsoft.com") int eventId) throws Exception {
 		serviceEndpointLogger.info("Me: getEvent");
 		return megaEventDao.getEvent(eventId); 
 	}
 	
 	@WebMethod
-	public List<Event> getEvents() throws Exception {
-		serviceEndpointLogger.info("Me: getEvent");
-		return megaEventDao.getEvents(); 
+	public List<Event> getAllEvents() throws Exception {
+		serviceEndpointLogger.info("Me: getAllEvents");
+		return megaEventDao.getAllEvents(); 
+	}
+	
+	@WebMethod
+	public List<Event> getClosedEvents() throws Exception {
+		serviceEndpointLogger.info("Me: getClosedEvents");
+		return megaEventDao.getClosedEvents(); 
+	}
+	
+	@WebMethod
+	public List<Event> getCanceledEvents() throws Exception {
+		serviceEndpointLogger.info("Me: getCanceledEvents");
+		return megaEventDao.getCanceledEvents(); 
+	}
+
+	@WebMethod
+	public List<Event> getInactiveEvents() throws Exception {
+		serviceEndpointLogger.info("Me: getInactiveEvents");
+		return megaEventDao.getInactiveEvents(); 
+	}
+
+	@WebMethod
+	public List<Event> getMyAssignedEvents(@WebParam(name="personId", targetNamespace="http://ws.megaevent.pahlsoft.com") int personId) throws Exception {
+		serviceEndpointLogger.info("Me: getMyAssignedEvents");
+		return megaEventDao.getMyAssignedEvents(personId); 
 	}
 	
 	@WebMethod
@@ -138,5 +192,7 @@ public class MegaEventServicesEndpoint extends SpringBeanAutowiringSupport {
 		serviceEndpointLogger.info("Me: getTargetedItems");
 		return megaEventDao.getTargetedItems(eventId);
 	}
+	
+	
 	
 }

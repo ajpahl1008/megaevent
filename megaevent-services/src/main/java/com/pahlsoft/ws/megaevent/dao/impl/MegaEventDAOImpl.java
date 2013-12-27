@@ -62,7 +62,7 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 		return event;
 	}
 
-	public List<Event> getEvents() {
+	public List<Event> getAllEvents() {
 		daoLog.debug("Querying for all Events");
 		String sql = "select * from megaevent.megaevent_events_j01 order by eventID";
 		List<Event> events = new ArrayList<Event>();
@@ -189,6 +189,189 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 			items.add(item);
 		}
 		return items;
+	}
+	
+	
+	public List<Event> getClosedEvents() {
+		daoLog.debug("Querying for Closed Events");
+		String sql = "SELECT * FROM megaevent.megaevent_events_j01 where status='CLOSED'";
+		List<Event> events = new ArrayList<Event>();
+		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
+		for (Map<?, ?> row : rows) {
+			Event event = new Event();
+			event.setId((Integer)row.get("eventID"));
+			event.setTitle((String)row.get("title"));
+			event.setDescription((String)row.get("description"));
+			event.setEventStatus((String)row.get("status"));
+			events.add(event);
+		}
+		return events;
+	}
+
+	public List<Event> getCanceledEvents() {
+		daoLog.debug("Querying for Canceled Events");
+		String sql = "SELECT * FROM megaevent.megaevent_events_j01 where status='CANCELED'";
+		List<Event> events = new ArrayList<Event>();
+		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
+		for (Map<?, ?> row : rows) {
+			Event event = new Event();
+			event.setId((Integer)row.get("eventID"));
+			event.setTitle((String)row.get("title"));
+			event.setDescription((String)row.get("description"));
+			event.setEventStatus((String)row.get("status"));
+			events.add(event);
+		}
+		return events;
+	}
+
+	public List<Event> getInactiveEvents() {
+		daoLog.debug("Querying for Inactive Events");
+		String sql = "SELECT * FROM megaevent.megaevent_events_j01 where status='CANCELED' or status='CLOSED' or status='NOT_STARTED'";
+		List<Event> events = new ArrayList<Event>();
+		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
+		for (Map<?, ?> row : rows) {
+			Event event = new Event();
+			event.setId((Integer)row.get("eventID"));
+			event.setTitle((String)row.get("title"));
+			event.setDescription((String)row.get("description"));
+			event.setEventStatus((String)row.get("status"));
+			events.add(event);
+		}
+		return events;
+	}
+
+	public List<Event> getMyAssignedEvents(int personId) {
+		List<Event> events = new ArrayList<Event>();
+		for (int eventId : getEventIdsByPerson(personId) ) {
+			daoLog.debug("Querying for assigned event  " + eventId);
+			events.add(getEvent(eventId));
+		}
+		return events;
+	}
+	
+	private List<Integer> getEventIdsByPerson(int personId) {
+		daoLog.debug("Querying for Events assigned to person with Id " + personId);
+		String sql = "SELECT * FROM megaevent.megaevent_persons_event_j01 where personID='" + personId + "'";
+		List<Integer> eventIds = new ArrayList<Integer>();
+		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
+		for (Map<?, ?> row : rows) {
+			eventIds.add((Integer)row.get("eventID"));
+		}
+		return eventIds;
+	}
+	
+	public List<Task> getMyAssignedTasks(int personId) {
+		daoLog.debug("Querying for Tasks for Person ID: " + personId);
+		String sql = "select * from megaevent.megaevent_tasks_j01 where ownerID='" + personId + "'";
+		List<Task> tasks = new ArrayList<Task>();
+
+		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
+		for (Map<?, ?> row : rows) {
+			Task task = new Task();
+			task.setId((Integer)row.get("taskID"));
+			task.setName((String)row.get("task_name"));
+			task.setTaskStatus((String)row.get("task_status"));
+			task.setTaskResult((String)row.get("task_result"));
+			task.setDependencyId((Integer)row.get("dependency_taskID"));
+			task.setEventId((Integer)row.get("eventID"));
+			task.setOwnerId((Integer)row.get("ownerID"));
+			task.setActivatorId((Integer)row.get("activatorID"));
+			task.setValidatorId((Integer)row.get("validatorID"));
+			task.setRole((String)row.get("role"));
+			task.setDescription(((String)row.get("description")));
+			task.setChangeControlNumber((((String)row.get("change_control"))));
+			task.setChangeControlStatus((String)row.get("change_status"));
+			task.setAssetName((String)row.get("asset_name"));
+			tasks.add(task);
+		}
+
+		return tasks;
+	}
+
+	public List<Task> getMyAssignedTasksForEvent(int personId, int eventId) {
+		daoLog.debug("Querying for Tasks for Person ID: " + personId + " Event ID: " + eventId);
+		String sql = "select * from megaevent.megaevent_tasks_j01 where eventID='" + eventId + "' and ownerID='" + personId + "'";
+		List<Task> tasks = new ArrayList<Task>();
+
+		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
+		for (Map<?, ?> row : rows) {
+			Task task = new Task();
+			task.setId((Integer)row.get("taskID"));
+			task.setName((String)row.get("task_name"));
+			task.setTaskStatus((String)row.get("task_status"));
+			task.setTaskResult((String)row.get("task_result"));
+			task.setDependencyId((Integer)row.get("dependency_taskID"));
+			task.setEventId((Integer)row.get("eventID"));
+			task.setOwnerId((Integer)row.get("ownerID"));
+			task.setActivatorId((Integer)row.get("activatorID"));
+			task.setValidatorId((Integer)row.get("validatorID"));
+			task.setRole((String)row.get("role"));
+			task.setDescription(((String)row.get("description")));
+			task.setChangeControlNumber((((String)row.get("change_control"))));
+			task.setChangeControlStatus((String)row.get("change_status"));
+			task.setAssetName((String)row.get("asset_name"));
+			tasks.add(task);
+		}
+
+		return tasks;
+	}
+		
+
+	public List<Task> getMyCompletedTasksForEvent(int personId, int eventId) {
+
+		daoLog.debug("Querying for Closed Tasks for Person ID: " + personId + " for Event ID: " + eventId);
+		String sql = "select * from megaevent.megaevent_tasks_j01 where ownerID='" + personId + "' and eventID='" + eventId + "' and task_status='COMPLETED'";
+		List<Task> tasks = new ArrayList<Task>();
+
+		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
+		for (Map<?, ?> row : rows) {
+			Task task = new Task();
+			task.setId((Integer)row.get("taskID"));
+			task.setName((String)row.get("task_name"));
+			task.setTaskStatus((String)row.get("task_status"));
+			task.setTaskResult((String)row.get("task_result"));
+			task.setDependencyId((Integer)row.get("dependency_taskID"));
+			task.setEventId((Integer)row.get("eventID"));
+			task.setOwnerId((Integer)row.get("ownerID"));
+			task.setActivatorId((Integer)row.get("activatorID"));
+			task.setValidatorId((Integer)row.get("validatorID"));
+			task.setRole((String)row.get("role"));
+			task.setDescription(((String)row.get("description")));
+			task.setChangeControlNumber((((String)row.get("change_control"))));
+			task.setChangeControlStatus((String)row.get("change_status"));
+			task.setAssetName((String)row.get("asset_name"));
+			tasks.add(task);
+		}
+
+		return tasks;
+	}
+
+	public List<Task> getMyTaskHistory(int personId) {
+		daoLog.debug("Querying for Task History for Person ID: " + personId );
+		String sql = "select * from megaevent.megaevent_tasks_j01 where ownerID='" + personId + "'";
+		List<Task> tasks = new ArrayList<Task>();
+
+		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
+		for (Map<?, ?> row : rows) {
+			Task task = new Task();
+			task.setId((Integer)row.get("taskID"));
+			task.setName((String)row.get("task_name"));
+			task.setTaskStatus((String)row.get("task_status"));
+			task.setTaskResult((String)row.get("task_result"));
+			task.setDependencyId((Integer)row.get("dependency_taskID"));
+			task.setEventId((Integer)row.get("eventID"));
+			task.setOwnerId((Integer)row.get("ownerID"));
+			task.setActivatorId((Integer)row.get("activatorID"));
+			task.setValidatorId((Integer)row.get("validatorID"));
+			task.setRole((String)row.get("role"));
+			task.setDescription(((String)row.get("description")));
+			task.setChangeControlNumber((((String)row.get("change_control"))));
+			task.setChangeControlStatus((String)row.get("change_status"));
+			task.setAssetName((String)row.get("asset_name"));
+			tasks.add(task);
+		}
+
+		return tasks;		
 	}
 		
 	public int addEvent(Event event) {
