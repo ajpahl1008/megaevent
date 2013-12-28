@@ -11,16 +11,7 @@ public class WorkerController {
  
 	@RequestMapping(method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
-//		EventClientImpl ecl = new EventClientImpl();
-//		Event[] event = null;
-//		try {
-//			event = ecl.getEvents();
-//		} catch (RemoteException e) {
-//			e.printStackTrace();
-//		}
-//
-//		List<Event> events = Arrays.asList(event);
-//        model.addAttribute("eventModel" , events);
+
 		return "worker";
 		
  

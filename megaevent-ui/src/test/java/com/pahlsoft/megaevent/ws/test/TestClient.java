@@ -2,8 +2,6 @@ package com.pahlsoft.megaevent.ws.test;
 
 import static org.junit.Assert.*;
 
-import java.rmi.RemoteException;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,7 +18,7 @@ public class TestClient {
 	}
 
 	@Test
-	public void test() throws RemoteException {
+	public void test() throws Exception {
 		assertEquals("SecondEventEver",eci.getEvent(1).getDescription());
 	}
 
