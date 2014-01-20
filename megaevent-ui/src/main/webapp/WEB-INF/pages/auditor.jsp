@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <c:set var="eventCounter" value="0" scope="page" />
+<c:set var="taskCounter" value="0" scope="page" />
 
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,24 @@
 <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
 <script src="<c:url value="/resources/js/jquery-1.10.2.min.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+<link rel="icon" type="image/png" href="<c:url value="/resources/images/favicon.ico"/>"></link>
+
+<script type="text/javascript">
+	function refreshGrid() {
+		$.ajax({
+			url : 'gridRefresh',
+			success : function(data) {
+				$('#eventGrid').html(data);
+			 }
+			});
+		}
+</script>
+
+<script type="text/javascript">
+	var intervalId = 0;
+	intervalId = setInterval(refreshGrid, 5000);
+</script>
+
 <style type="text/css">
 body {
 	padding-top: 20px;
@@ -145,19 +164,15 @@ body {
 				<p></p>
 			</div>
 			<div class="col-lg-4">
-				<input type="text" class="form-control"> <a
-					class="btn btn-success btn-sm">Find Event</a>
+				<input type="text" class="form-control" name="eventNumber"> 
+				<a class="btn btn-xs btn-success" >Find Event</a>
 			</div>
 		</div>
 		<!-- Site footer -->
 		<div class="footer">
 
-			<div class="container">
-				<c:forEach items="${eventModel}" var="event" varStatus="counter">
-					<c:set var="eventCounter" value="${eventCounter + 1}" scope="page" />
-				</c:forEach>
-				<span class="badge pull-right">Active Events:
-					${eventCounter}</span>
+			<div class="container" id="eventGrid">
+				<div class="col-lg-12" align="center">
 				<table
 					class="table table-hover table-striped table-bordered table-condensed">
 					<thead>
@@ -168,19 +183,11 @@ body {
 							<th>Description</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<c:forEach items="${eventModel}" var="event" varStatus="counter">
-								<tr>
-									<td>${event.id}</td>
-									<td>${event.title}</td>
-									<td>${event.eventStatus}</td>
-									<td>${event.description}</td>
-								</tr>
-							</c:forEach>
-						</tr>
-					</tbody>
+					<tbody></tbody>
 				</table>
+					<p class="text"><strong>Loading...</strong></p>
+					<img src="<c:url value="/resources/images/ajax-loader.gif"/>" title="Loading" />
+				</div>
 			</div>
 		</div>
 	</div>

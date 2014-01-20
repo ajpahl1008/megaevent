@@ -9,6 +9,8 @@
    	<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
 	<script src="<c:url value="/resources/js/jquery-1.10.2.min.js" />"></script>
 	<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+	<link rel="icon" type="image/png" href="<c:url value="/resources/images/favicon.ico"/>"></link>
+	
     <style type="text/css">
       body {
         padding-top: 20px;
