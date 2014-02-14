@@ -163,3 +163,4 @@ pip-log.txt
 .DS_Store
 /megaevent-ui/target
 /megaevent-ui/target
+/megaevent-services/src/main/java/com/pahlsoft/ws/megaevent/generated
