@@ -108,7 +108,7 @@
         </div>
       </div>
       <div class="footer">
-        <p>&copy; PahlsSoft 2013</p>
+        <p>&copy; PahlSoft 2014</p>
       </div>
     </div>
     <!-- /container -->
