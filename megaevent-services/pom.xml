@@ -51,30 +51,30 @@
 					<removeOldOutput>true</removeOldOutput>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.jboss.as.plugins</groupId>
-				<artifactId>jboss-as-maven-plugin</artifactId>
-				<version>7.5.Final</version>
-				<configuration>
-				 <hostname>localhost</hostname>
-				</configuration>
-				<executions>
-					<execution>
-						<id>install</id>
-						<phase>install</phase>
-						<goals>
-							<goal>deploy</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>undeploy</id>
-						<phase>clean</phase>
-						<goals>
-							<goal>undeploy</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			<!--<plugin>-->
+				<!--<groupId>org.jboss.as.plugins</groupId>-->
+				<!--<artifactId>jboss-as-maven-plugin</artifactId>-->
+				<!--<version>7.5.Final</version>-->
+				<!--<configuration>-->
+				 <!--<hostname>localhost</hostname>-->
+				<!--</configuration>-->
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<id>install</id>-->
+						<!--<phase>install</phase>-->
+						<!--<goals>-->
+							<!--<goal>deploy</goal>-->
+						<!--</goals>-->
+					<!--</execution>-->
+					<!--<execution>-->
+						<!--<id>undeploy</id>-->
+						<!--<phase>clean</phase>-->
+						<!--<goals>-->
+							<!--<goal>undeploy</goal>-->
+						<!--</goals>-->
+					<!--</execution>-->
+				<!--</executions>-->
+			<!--</plugin>-->
 		</plugins>
 		<pluginManagement>
 			<plugins>
