@@ -12,11 +12,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1.1</version>
+				<version>2.4</version>
 				<configuration>
 					<webResources>
 						<resource>
-							<directory>/</directory>
+							<directory>src/main/webapp</directory>
 						</resource>
 					</webResources>
 				</configuration>
@@ -26,8 +26,8 @@
 		  <artifactId>maven-compiler-plugin</artifactId>
 		  <version>2.1</version>
 		  <configuration>
-			 <source>1.6</source>
-			 <target>1.6</target>
+			 <source>1.7</source>
+			 <target>1.7</target>
 		  </configuration>
 	   </plugin>
 			<plugin>
@@ -51,30 +51,30 @@
 					<removeOldOutput>true</removeOldOutput>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.jboss.as.plugins</groupId>
-				<artifactId>jboss-as-maven-plugin</artifactId>
-				<version>7.5.Final</version>
-				<configuration>
-				 <hostname>AJPC</hostname>
-				</configuration>
-				<executions>
-					<execution>
-						<id>install</id>
-						<phase>install</phase>
-						<goals>
-							<goal>deploy</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>undeploy</id>
-						<phase>clean</phase>
-						<goals>
-							<goal>undeploy</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			<!--<plugin>-->
+				<!--<groupId>org.jboss.as.plugins</groupId>-->
+				<!--<artifactId>jboss-as-maven-plugin</artifactId>-->
+				<!--<version>7.5.Final</version>-->
+				<!--<configuration>-->
+				 <!--<hostname>localhost</hostname>-->
+				<!--</configuration>-->
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<id>install</id>-->
+						<!--<phase>install</phase>-->
+						<!--<goals>-->
+							<!--<goal>deploy</goal>-->
+						<!--</goals>-->
+					<!--</execution>-->
+					<!--<execution>-->
+						<!--<id>undeploy</id>-->
+						<!--<phase>clean</phase>-->
+						<!--<goals>-->
+							<!--<goal>undeploy</goal>-->
+						<!--</goals>-->
+					<!--</execution>-->
+				<!--</executions>-->
+			<!--</plugin>-->
 		</plugins>
 		<pluginManagement>
 			<plugins>
