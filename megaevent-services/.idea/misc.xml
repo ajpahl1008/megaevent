@@ -6,11 +6,15 @@
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$" />
+  </component>
   <component name="GroovyCompilerProjectConfiguration">
     <excludes>
       <directory url="file://C:/Program Files (x86)/Groovy/Groovy-2.2.1" includeSubdirectories="true" />
     </excludes>
   </component>
+  <component name="IdProvider" IDEtalkID="0711D864B85396A65F7CAEFF1CF3D680" />
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>

@@ -99,7 +99,7 @@
 				<artifactId>jboss-as-maven-plugin</artifactId>
 				<version>7.5.Final</version>
 				<configuration>
-					<hostname>AJPC</hostname>
+					<hostname>192.168.0.34</hostname>
 				</configuration>
 				<executions>
 					<execution>

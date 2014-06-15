@@ -1,6 +1,7 @@
 package com.pahlsoft.megaevent.ui.controller;
 
 import com.pahlsoft.megaevent.executor.EventClientImpl;
+import com.pahlsoft.megaevent.ws.generated.EventArray;
 import com.pahlsoft.megaevent.ws.generated.Task;
 import com.pahlsoft.megaevent.ws.generated.TaskArray;
 import org.apache.log4j.Logger;
@@ -15,15 +16,28 @@ public class AuditorTaskController {
 
     Logger LOG = Logger.getLogger(AuditorTaskController.class);
 
+    @RequestMapping(value={"/tasks"})
+    public String showAuditor(ModelMap model) {
+        EventClientImpl ecl = new EventClientImpl();
+        TaskArray tasks = new TaskArray();
+        try {
+            tasks = ecl.getTasks(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("taskModel" , tasks.getItem());
+        return "auditor";
+    }
 
-    @RequestMapping(value = "/searchTaskGrid", method = RequestMethod.POST)
-    public ModelMap searchEventGrid(@ModelAttribute(value="eventNumber") int eventNumber, ModelMap modelMap) {
+
+    @RequestMapping(value = {"/taskGrid"}, method = RequestMethod.POST)
+    public ModelMap searchTaskGrid(@ModelAttribute(value="taskNumber") int taskNumber, ModelMap modelMap) {
         EventClientImpl ecl = new EventClientImpl();
         TaskArray tasks = new TaskArray();
         Task task = new Task();
 
         try {
-            task = ecl.getTask(eventNumber);
+            task = ecl.getTask(taskNumber);
 
              if (task.getTaskStatus() == null) {
                 task.setId(0);
@@ -40,15 +54,15 @@ public class AuditorTaskController {
                  task.setValidatorId(0);
 
                 tasks.getItem().add(task);
-                modelMap.addAttribute("eventModel" , events.getItem());
+                modelMap.addAttribute("taskModel", tasks.getItem());
             } else {
-                 events.getItem().add(event);
-                 modelMap.addAttribute("eventModel" , events.getItem());
+                 tasks.getItem().add(task);
+                 modelMap.addAttribute("taskModel" , tasks.getItem());
              }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        LOG.debug("Searching for Event" + event.getId());
+        LOG.debug("Searching for Task" + task.getId());
         return modelMap;
     }
 

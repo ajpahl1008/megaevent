@@ -4,16 +4,6 @@
 
 <div class="container" id="eventGrid">
 
-    <div class="row">
-        <div class="col-lg-4">
-            <p></p>
-        </div>
-        <div class="col-lg-4">
-            <input type="text" class="form-control" id="eventNumber" >
-            <a class="btn btn-xs btn-success" onclick="goSearchGrid()">Find Event</a>
-            <a class="btn btn-xs btn-info" onclick="resetSearch()">Clear Search</a>
-        </div>
-     </div>
 
     <div class="col-lg-12" align="center">
         <c:forEach items="${eventModel}" var="event" varStatus="counter">

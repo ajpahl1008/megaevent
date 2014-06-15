@@ -18,11 +18,11 @@
 <script src="<c:url value="/resources/js/jquery-1.10.2.min.map" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 <script src="<c:url value="/resources/js/megaevent.js" />"></script>
-<link rel="icon" type="image/png" href="<c:url value="/resources/images/favicon.ico"/>"></link>
+<link rel="icon" type="image/png" href="<c:url value="/resources/images/favicon.ico"/>">
 
 <script type="text/javascript">
 	var intervalId = 0;
-	intervalId = setInterval(refreshGrid, ${refreshInterval});
+	intervalId = setInterval(refreshEventGrid, ${refreshInterval});
 </script>
 
 </head>
@@ -49,21 +49,22 @@
 				<li><a href="tasks">Tasks</a></li>
 				<li><a href="changes">Change Controls</a></li>
 			</ul>
+            <div class="row">
+                <div class="col-lg-4">
+                    <p></p>
+                </div>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" id="eventNumber" >
+                    <a class="btn btn-xs btn-success" onclick="goSearchEventGrid()">Find Event</a>
+                    <a class="btn btn-xs btn-info" onclick="resetEventSearch()">Clear Search</a>
+                </div>
+            </div>
+
 		</div>
 
 		<div class="footer">
+    		<div class="container" id="eventGrid">
 
-			<div class="container" id="eventGrid">
-        			<div class="row">
-            			<div class="col-lg-4">
-            				<p></p>
-            			</div>
-            			<div class="col-lg-4">
-            				<input type="text" class="form-control" id="eventNumber" >
-            				<a class="btn btn-xs btn-success" onclick="goSearchGrid()">Find Event</a>
-            				<a class="btn btn-xs btn-info" onclick="resetSearch()">Clear Search</a>
-                    	</div>
-                    </div>
 
 				<div class="col-lg-12" align="center">
 				<table

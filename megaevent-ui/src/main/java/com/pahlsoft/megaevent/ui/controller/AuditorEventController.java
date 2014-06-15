@@ -29,7 +29,7 @@ public class AuditorEventController {
 		return "auditor";
 	}
  
-	@RequestMapping(value = "/gridRefresh", method = RequestMethod.GET)
+	@RequestMapping(value = "/eventGridRefresh", method = RequestMethod.GET)
 	public String updateGrid(ModelMap model) {
 		EventClientImpl ecl = new EventClientImpl();
 		EventArray events = new EventArray();
@@ -43,7 +43,7 @@ public class AuditorEventController {
 		return "eventGrid";
 	}
 
-    @RequestMapping(value = "/searchGrid", method = RequestMethod.POST)
+    @RequestMapping(value = "/searchEventGrid", method = RequestMethod.POST)
     public ModelMap searchEventGrid(@ModelAttribute(value="eventNumber") int eventNumber, ModelMap modelMap) {
         EventClientImpl ecl = new EventClientImpl();
         EventArray events = new EventArray();
