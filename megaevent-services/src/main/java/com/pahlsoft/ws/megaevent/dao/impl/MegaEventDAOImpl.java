@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import javax.sql.DataSource;
 
+import com.pahlsoft.ws.megaevent.exceptions.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,10 +19,6 @@ import com.pahlsoft.ws.megaevent.beans.RoleMapBean;
 import com.pahlsoft.ws.megaevent.beans.TaskResultMapBean;
 import com.pahlsoft.ws.megaevent.beans.TaskStatusMapBean;
 import com.pahlsoft.ws.megaevent.dao.MegaEventDAO;
-import com.pahlsoft.ws.megaevent.exceptions.InvalidAssetTypeException;
-import com.pahlsoft.ws.megaevent.exceptions.InvalidChangeStatusException;
-import com.pahlsoft.ws.megaevent.exceptions.InvalidRoleException;
-import com.pahlsoft.ws.megaevent.exceptions.InvalidTaskException;
 import com.pahlsoft.ws.megaevent.generated.Event;
 import com.pahlsoft.ws.megaevent.generated.Person;
 import com.pahlsoft.ws.megaevent.generated.TargetedItem;
@@ -438,21 +435,21 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 		});
 	}
 
-	public int updateTask(Task taskInfo) {
+	public int updateTask(Task taskInfo) throws Exception {
 		daoLog.debug("Updating Task : " + taskInfo.getId());
 		String task_sql = "UPDATE megaevent.tasks set name=?,task_status=?,task_result=?,dependency_taskID=?,eventID=?,ownerID=?,activatorID=?,validatorID=?,role=?,description=?,change_control=?,change_status=?,targeted_itemID=? where taskID=?";
 		return getJdbcTemplate().update(task_sql,new Object[] {taskInfo.getName(),
-																 taskInfo.getTaskStatus(),
-																 taskInfo.getTaskResult(),
+																 getTaskStatusId(taskInfo.getTaskStatus()),
+																 getTaskResultId(taskInfo.getTaskResult()),
 																 taskInfo.getDependencyId(),
 																 taskInfo.getEventId(),
 																 taskInfo.getOwnerId(),
 																 taskInfo.getActivatorId(),
 																 taskInfo.getValidatorId(),
-																 taskInfo.getRole(),
+																 getRoleId(taskInfo.getRole()),
 																 taskInfo.getDescription(),
 																 taskInfo.getChangeControlNumber(),
-																 taskInfo.getChangeControlStatus(),
+																 getChangeStatusId(taskInfo.getChangeControlStatus()),
 																 getTargetedItemId(taskInfo.getAssetName()),
 																 taskInfo.getId()
 		});
@@ -550,9 +547,18 @@ public class MegaEventDAOImpl implements MegaEventDAO {
 		return key;
 	}
 	
-	private int getTargetedItemId(String assetName) {
+	private int getTargetedItemId(String assetName) throws InvalidTargetedItemException {
+        Integer serverId= null;
 		String target_sql = "select targeted_itemsID from megaevent.targeted_items where asset_name=? limit 1";
-		return getJdbcTemplate().queryForInt(target_sql,new Object[] {assetName});	
+
+        try {
+            serverId = getJdbcTemplate().queryForInt(target_sql,new Object[] {assetName});
+
+        } catch (Exception e) {
+            throw new InvalidTargetedItemException("Not a valid Targeted Item");
+        }
+        if (serverId==null) throw new InvalidTargetedItemException("Not a valid Targeted Item");
+        return serverId;
 	}
 			
 	public JdbcTemplate getJdbcTemplate() {
