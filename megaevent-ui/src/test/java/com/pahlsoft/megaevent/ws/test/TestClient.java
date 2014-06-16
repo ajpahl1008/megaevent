@@ -12,7 +12,7 @@ import java.util.UUID;
 
 
 public class TestClient {
-	
+
 	EventClientImpl eci;
     Event event;
 
@@ -25,16 +25,14 @@ public class TestClient {
     @Test
     public void addNewEventShouldPass() throws Exception {
         event.setDescription("UnitTestDescription");
-        event.setEventStatus("GREEN");
+        event.setEventStatus("ACTIVE");
         event.setTitle("TestEvent: " + UUID.randomUUID());
         assertEquals(1, eci.addEvent(event));
     }
 
 	@Test
 	public void test() throws Exception {
-		assertEquals("ThirdEventEver",eci.getEvent(2).getDescription());
+		assertEquals(" The Very First Event",eci.getEvent(2).getDescription());
 	}
-
-
 
 }

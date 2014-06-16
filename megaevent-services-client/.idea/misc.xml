@@ -8,6 +8,7 @@
       <directory url="file://C:/Program Files (x86)/Groovy/Groovy-2.2.1" includeSubdirectories="true" />
     </excludes>
   </component>
+  <component name="IdProvider" IDEtalkID="2A981352DE0E46C916A1DACEFB72664C" />
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
