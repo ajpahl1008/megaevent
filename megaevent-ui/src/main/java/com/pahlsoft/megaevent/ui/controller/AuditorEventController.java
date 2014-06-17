@@ -66,7 +66,7 @@ public class AuditorEventController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        LOG.debug("Searching for Event" + event.getId());
+        LOG.info("Searching for Event" + event.getId());
         return modelMap;
     }
 

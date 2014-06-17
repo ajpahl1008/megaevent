@@ -32,7 +32,7 @@
     function resetEventSearch() {
             $('#eventNumber').val('');
             refreshActive = true;
-            refreshGrid();
+            refreshEventGrid();
     }
 
 	function goSearchTaskGrid() {

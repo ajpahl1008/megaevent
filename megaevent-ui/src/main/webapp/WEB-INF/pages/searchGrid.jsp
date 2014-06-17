@@ -10,8 +10,8 @@
         </div>
         <div class="col-lg-4">
             <input type="text" class="form-control" id="eventNumber" >
-            <a class="btn btn-xs btn-success" onclick="goSearchGrid()">Find Event</a>
-            <a class="btn btn-xs btn-info" onclick="resetSearch()">Clear Search</a>
+            <a class="btn btn-xs btn-success" onclick="goSearchEventGrid()">Find Event</a>
+            <a class="btn btn-xs btn-info" onclick="resetEventSearch()">Clear Search</a>
         </div>
      </div>
 
