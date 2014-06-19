@@ -51,14 +51,14 @@
 				<li><a href="tasks">Tasks</a></li>
 				<li><a href="changes">Change Controls</a></li>
 			</ul>
-            <form id="eventSearchForm" class="form-horizontal">
+            <form id="eventSearchForm" method="post" class="form-horizontal">
                 <div class="form-group">
                     <label class="col-lg-4 control-label">Enter Event Number</label>
                     <div class="col-lg-3">
                         <input type="text" class="form-control" id="eventNumber" name="eventNumber" />
                     </div>
-                        <a class="btn btn-xs btn-success" onclick="goSearchEventGrid()">Find Event</a>
-                        <a class="btn btn-xs btn-info" onclick="resetEventSearch()">Clear Search</a>
+                        <button type="submit" name="findEventButton" class="btn btn-xs btn-success"  onclick="goSearchEventGrid()">Find Event</button>
+                        <button class="btn btn-xs btn-info" onclick="resetEventSearch()">Clear Search</button>
 
                 </div>
             </form>
@@ -67,7 +67,6 @@
 
 		<div class="footer">
     		<div class="container" id="eventGrid">
-
 
 				<div class="col-lg-12" align="center">
 				<table

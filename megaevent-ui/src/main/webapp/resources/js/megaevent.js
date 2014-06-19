@@ -35,24 +35,6 @@
             refreshEventGrid();
     }
 
-	function goSearchTaskGrid() {
-	        var paddedTaskNumber = "taskNumber=" + $('#taskNumber').val();
-	        refreshActive=false;
-
-    		$.ajax({
-    		    url : 'searchTaskGrid',
-    		    type : 'POST',
-    			data : paddedTaskNumber,
-    			success : function(data) {
-    				$('#taskGrid').html(data);
-    			},
-    			error: function(data, errorMessage) {
-    			    alert('Invalid Search Data: ' + errorMessage);
-    			}
-    		});
-    }
-
-
     $(document).ready(function() {
         $('#eventSearchForm').bootstrapValidator({
             feedbackIcons: {
@@ -60,33 +42,20 @@
                 invalid: 'glyphicon glyphicon-remove',
                 validating: 'glyphicon glyphicon-refresh'
             },
+            submitHandler: function(validator, form) {
+                // do nothing
+            },
             fields: {
                 eventNumber: {
                     validators: {
                         integer: {
                             message: 'The value is not an integer'
+                        },
+                        notEmpty: {
+                            message: 'Number required'
                         }
                     }
                 }
             }
         });
     });
-
-//    function resetTaskSearch() {
-//            $('#taskNumber').val('');
-//            refreshActive = true;
-//            refreshGrid();
-//    }
-//
-//	function refreshTaskGrid() {
-//    	if (refreshActive) {
-//		    $.ajax({
-//    			url : 'taskGridRefresh',
-//    			success : function(data) {
-//    				$('#taskGrid').html(data);
-//    			 }
-//    			});
-//    	    }
-//	}
-
-
