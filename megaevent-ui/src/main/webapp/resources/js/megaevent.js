@@ -52,19 +52,41 @@
     		});
     }
 
-    function resetTaskSearch() {
-            $('#taskNumber').val('');
-            refreshActive = true;
-            refreshGrid();
-    }
 
-	function refreshTaskGrid() {
-    	if (refreshActive) {
-		    $.ajax({
-    			url : 'taskGridRefresh',
-    			success : function(data) {
-    				$('#taskGrid').html(data);
-    			 }
-    			});
-    	    }
-	}
+    $(document).ready(function() {
+        $('#eventSearchForm').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                eventNumber: {
+                    validators: {
+                        integer: {
+                            message: 'The value is not an integer'
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+//    function resetTaskSearch() {
+//            $('#taskNumber').val('');
+//            refreshActive = true;
+//            refreshGrid();
+//    }
+//
+//	function refreshTaskGrid() {
+//    	if (refreshActive) {
+//		    $.ajax({
+//    			url : 'taskGridRefresh',
+//    			success : function(data) {
+//    				$('#taskGrid').html(data);
+//    			 }
+//    			});
+//    	    }
+//	}
+
+

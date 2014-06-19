@@ -4,16 +4,19 @@
 
 <div class="container" id="eventGrid">
 
-    <div class="row">
-        <div class="col-lg-4">
-            <p></p>
+    <form id="eventSearchForm" class="form-horizontal">
+        <div class="row">
+            <div class="col-lg-4">
+                <p></p>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" class="form-control" id="eventNumber" >
+                <a class="btn btn-xs btn-success" onclick="goSearchEventGrid()">Find Event</a>
+                <a class="btn btn-xs btn-info" onclick="resetEventSearch()">Clear Search</a>
+            </div>
         </div>
-        <div class="col-lg-4">
-            <input type="text" class="form-control" id="eventNumber" >
-            <a class="btn btn-xs btn-success" onclick="goSearchEventGrid()">Find Event</a>
-            <a class="btn btn-xs btn-info" onclick="resetEventSearch()">Clear Search</a>
-        </div>
-     </div>
+    </form>
+
 
 
     <div class="col-lg-12" align="center">

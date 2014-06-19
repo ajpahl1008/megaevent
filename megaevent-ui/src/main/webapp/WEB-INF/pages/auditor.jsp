@@ -13,10 +13,12 @@
 <title>MegaEvent - Auditor</title>
 <meta name="viewport" content="width=device-width">
 <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/bootstrapValidator.min.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/megaevent.css" />" rel="stylesheet">
 <script src="<c:url value="/resources/js/jquery-1.10.2.min.js" />"></script>
 <script src="<c:url value="/resources/js/jquery-1.10.2.min.map" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+<script src="<c:url value="/resources/js/bootstrapValidator.min.js" />"></script>
 <script src="<c:url value="/resources/js/megaevent.js" />"></script>
 <link rel="icon" type="image/png" href="<c:url value="/resources/images/favicon.ico"/>">
 
@@ -49,18 +51,19 @@
 				<li><a href="tasks">Tasks</a></li>
 				<li><a href="changes">Change Controls</a></li>
 			</ul>
-            <div class="row">
-                <div class="col-lg-4">
-                    <p></p>
-                </div>
-                <div class="col-lg-4">
-                    <input type="text" class="form-control" id="eventNumber" >
-                    <a class="btn btn-xs btn-success" onclick="goSearchEventGrid()">Find Event</a>
-                    <a class="btn btn-xs btn-info" onclick="resetEventSearch()">Clear Search</a>
-                </div>
-            </div>
+            <form id="eventSearchForm" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">Enter Event Number</label>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control" id="eventNumber" name="eventNumber" />
+                    </div>
+                        <a class="btn btn-xs btn-success" onclick="goSearchEventGrid()">Find Event</a>
+                        <a class="btn btn-xs btn-info" onclick="resetEventSearch()">Clear Search</a>
 
-		</div>
+                </div>
+            </form>
+
+        </div>
 
 		<div class="footer">
     		<div class="container" id="eventGrid">
