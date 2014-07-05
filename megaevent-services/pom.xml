@@ -6,7 +6,7 @@
 	<artifactId>megaevent-services</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>Mega Event Services</name>
+	<name>Mega Event Web Services</name>
 	<build>
 		<plugins>
 			<plugin>
