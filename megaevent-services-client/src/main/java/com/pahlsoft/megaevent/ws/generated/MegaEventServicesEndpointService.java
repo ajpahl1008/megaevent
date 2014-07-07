@@ -30,9 +30,10 @@ public class MegaEventServicesEndpointService
         try {
             URL baseUrl;
             baseUrl = com.pahlsoft.megaevent.ws.generated.MegaEventServicesEndpointService.class.getResource(".");
-            url = new URL(baseUrl, "http://localhost:8080/megaevent-services-0.0.1-SNAPSHOT/me?wsdl");
+            //url = new URL(baseUrl, "http://localhost:8080/megaevent-services-0.0.1-SNAPSHOT/me?wsdl");
+            url = new URL(System.getProperty("megaevent.webservice.url"));
         } catch (MalformedURLException e) {
-            logger.warning("Failed to create URL for the wsdl Location: 'http://localhost:8080/megaevent-services-0.0.1-SNAPSHOT/me?wsdl', retrying as a local file");
+            logger.warning("Failed to create URL for the wsdl Location: '" + System.getProperty("megaevent.webservice.url") + "', retrying as a local file");
             logger.warning(e.getMessage());
         }
         MEGAEVENTSERVICESENDPOINTSERVICE_WSDL_LOCATION = url;
